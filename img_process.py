@@ -259,6 +259,3 @@ def FindXylem(img): # The function to extract xylem areas
         xylem_areas.append(cv2.contourArea(contour))
 
     return xylem, xylem_areas, thresh
-
-
-"""There is a bug which some tiny xylem may not be noticed correctly"""
