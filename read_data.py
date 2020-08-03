@@ -2,11 +2,24 @@
 """
 Created on Sat Jul 18 12:57:00 2020
 
-@author: willi
+@author: William Clayden
 """
 import pandas as pd
 import os
 import glob
+import cv2
+
+def images_from_folder(editing):
+    if editing == True:
+        directory = input("Input the folder path of the unedited images: \n")
+    if editing == False:
+        directory = input("Input the folder path of the image to analyse: \n")
+    directory = directory.replace("\\", "/")
+    os.chdir(directory)
+    file_names = glob.glob("*.tif")
+    image_list = [cv2.imread(file) for file in glob.glob("*.tif")]
+
+    return image_list, directory, file_names
 
 def xylem_from_pkl():
     print("Which folder would you like to import pkl from?")
@@ -18,7 +31,7 @@ def xylem_from_pkl():
             new_loc = new_loc[:-1]
     
     try:
-        with open(str(os.path.dirname(__file__))+ "/save_location.txt") as file:
+        with open(str(os.path.dirname(__file__))+ "/data_save_location.txt") as file:
             default = file.readline()
             default = default.lstrip('\x00')
             if new_loc == default:
@@ -81,4 +94,3 @@ def xylem_from_pkl():
     dataset.sort_values('sample.ID')
     return dataset
 
-#test= xylem_from_pkl()
